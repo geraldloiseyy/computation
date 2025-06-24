@@ -49,8 +49,17 @@
     }
     .card {
       background-color: #ccc;
-      padding: 20px;
+      padding: 15px;
       border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .planet-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
     }
     .planet-info h2 {
       margin: 0;
@@ -59,7 +68,6 @@
     }
     .planet-info {
       font-size: 16px;
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -90,11 +98,14 @@
 
     const container = document.getElementById("planetContainer");
 
-    // Generate the planet cards
     planets.forEach(planet => {
       const card = document.createElement("div");
       card.className = "card";
+
+      const imageName = planet.name.toLowerCase() + ".jpg";
+
       card.innerHTML = `
+        <img class="planet-image" src="${imageName}" alt="${planet.name}">
         <div class="planet-info">
           <h2>${planet.name}</h2>
           Age: <span class="age" id="${planet.name}-age">-</span><br>
