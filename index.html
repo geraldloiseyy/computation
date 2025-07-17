@@ -6,20 +6,15 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: url('galaxy.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: #fff8f1;
       margin: 0;
       padding: 20px;
-      color: #f0f0f0;
     }
-
     h1 {
       text-align: center;
       font-size: 28px;
       text-decoration: underline;
-      color: #ffffff;
     }
-
     .input-area {
       display: flex;
       justify-content: center;
@@ -27,15 +22,11 @@
       margin-top: 10px;
       margin-bottom: 5px;
     }
-
     .input-area input[type="number"] {
       padding: 10px;
       font-size: 16px;
       width: 260px;
-      border: none;
-      border-radius: 5px;
     }
-
     .input-area button {
       padding: 10px 20px;
       font-size: 16px;
@@ -43,53 +34,40 @@
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
     }
-
     .note {
       text-align: center;
       font-style: italic;
-      color: #ffb3b3;
+      color: darkred;
       font-weight: bold;
     }
-
     .container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-top: 30px;
     }
-
     .card {
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(6px);
+      background-color: #ccc;
       padding: 15px;
       border-radius: 20px;
       display: flex;
       align-items: center;
       gap: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      color: #fff;
     }
-
     .planet-image {
       width: 80px;
       height: 80px;
       border-radius: 10px;
       object-fit: cover;
-      border: 2px solid #fff;
     }
-
     .planet-info h2 {
       margin: 0;
       font-size: 20px;
       text-decoration: underline;
-      color: #ffd700;
     }
-
     .planet-info {
       font-size: 16px;
-      color: #e0e0e0;
     }
   </style>
 </head>
@@ -107,15 +85,15 @@
 
   <script>
     const planets = [
-      { name: "Mercury", orbit: 0.24 },
-      { name: "Venus", orbit: 0.62 },
-      { name: "Earth", orbit: 1.00 },
-      { name: "Mars", orbit: 1.88 },
-      { name: "Jupiter", orbit: 11.86 },
-      { name: "Saturn", orbit: 29.46 },
-      { name: "Uranus", orbit: 84.01 },
-      { name: "Neptune", orbit: 164.8 },
-      { name: "Pluto", orbit: 248.0 }
+      { name: "Mercury", orbit: 0.24, distance: 0.39 },
+      { name: "Venus", orbit: 0.62, distance: 0.72 },
+      { name: "Earth", orbit: 1.00, distance: 1.00 },
+      { name: "Mars", orbit: 1.88, distance: 1.52 },
+      { name: "Jupiter", orbit: 11.86, distance: 5.20 },
+      { name: "Saturn", orbit: 29.46, distance: 9.58 },
+      { name: "Uranus", orbit: 84.01, distance: 19.18 },
+      { name: "Neptune", orbit: 164.8, distance: 30.07 },
+      { name: "Pluto", orbit: 248.0, distance: 39.48 }
     ];
 
     const container = document.getElementById("planetContainer");
@@ -133,7 +111,7 @@
           Age: <span class="age" id="${planet.name}-age">-</span><br>
           Revolution: ${planet.orbit} Earth years<br>
           Orbit Time: ~${Math.round(planet.orbit * 365)} days<br>
-          Distance: —
+          Distance: ${planet.distance} AU
         </div>
       `;
       container.appendChild(card);
