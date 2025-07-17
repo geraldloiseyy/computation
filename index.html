@@ -4,96 +4,135 @@
   <meta charset="UTF-8">
   <title>Earth Time Conversion</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
     body {
-      font-family: 'Arial', sans-serif;
-      background: #fff8f1;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://images.unsplash.com/photo-1580618674691-a3b6b3c7e9ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
       margin: 0;
       padding: 20px;
+      color: #fff;
     }
+
     h1 {
       text-align: center;
-      font-size: 28px;
-      text-decoration: underline;
+      font-size: 32px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      margin-bottom: 10px;
     }
+
     .input-area {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 10px;
-      margin-bottom: 5px;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
+
     .input-area input[type="number"] {
-      padding: 10px;
+      padding: 12px;
       font-size: 16px;
       width: 260px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      border-radius: 8px;
     }
+
     .input-area button {
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 16px;
-      background-color: #333;
-      color: white;
+      background-color: #00ffff;
+      color: #000;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
+
+    .input-area button:hover {
+      background-color: #00cccc;
+    }
+
     .note {
       text-align: center;
       font-style: italic;
-      color: darkred;
+      color: #ffd700;
       font-weight: bold;
+      text-shadow: 0 0 5px #000;
     }
+
     .container {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
       margin-top: 30px;
+      padding: 0 10px;
     }
+
     .card {
-      background-color: #ccc;
-      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 255, 255, 0.3);
       border-radius: 20px;
+      padding: 20px;
       display: flex;
       align-items: center;
       gap: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      transition: transform 0.3s ease;
     }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
     .planet-image {
       width: 80px;
       height: 80px;
-      border-radius: 10px;
+      border-radius: 12px;
       object-fit: cover;
+      border: 2px solid #00ffff;
     }
+
     .planet-info h2 {
-      margin: 0;
-      font-size: 20px;
+      margin: 0 0 5px 0;
+      font-size: 22px;
+      color: #00ffff;
       text-decoration: underline;
     }
+
     .planet-info {
-      font-size: 16px;
+      font-size: 15px;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <h1>Earth time conversion for other Planets</h1>
+  <h1>🌍 Earth Time Conversion Across the Galaxy 🌌</h1>
   <div class="input-area">
     <input id="earthYearsInput" type="number" placeholder="Enter Earth Years">
     <button onclick="convertAges()">Enter</button>
   </div>
   <div class="note">
-    Enter an Earth year value to see how time passes on other planets.
+    Discover your age and planetary details across the solar system!
   </div>
 
   <div class="container" id="planetContainer"></div>
 
   <script>
     const planets = [
-      { name: "Mercury", orbit: 0.24 },
-      { name: "Venus", orbit: 0.62 },
-      { name: "Earth", orbit: 1.00 },
-      { name: "Mars", orbit: 1.88 },
-      { name: "Jupiter", orbit: 11.86 },
-      { name: "Saturn", orbit: 29.46 },
-      { name: "Uranus", orbit: 84.01 },
-      { name: "Neptune", orbit: 164.8 },
-      { name: "Pluto", orbit: 248.0 }
+      { name: "Mercury", orbit: 0.24, distance: 0.39 },
+      { name: "Venus", orbit: 0.62, distance: 0.72 },
+      { name: "Earth", orbit: 1.00, distance: 1.00 },
+      { name: "Mars", orbit: 1.88, distance: 1.52 },
+      { name: "Jupiter", orbit: 11.86, distance: 5.20 },
+      { name: "Saturn", orbit: 29.46, distance: 9.58 },
+      { name: "Uranus", orbit: 84.01, distance: 19.18 },
+      { name: "Neptune", orbit: 164.8, distance: 30.07 },
+      { name: "Pluto", orbit: 248.0, distance: 39.48 }
     ];
 
     const container = document.getElementById("planetContainer");
@@ -111,7 +150,7 @@
           Age: <span class="age" id="${planet.name}-age">-</span><br>
           Revolution: ${planet.orbit} Earth years<br>
           Orbit Time: ~${Math.round(planet.orbit * 365)} days<br>
-          Distance: —
+          Distance: <span class="distance" id="${planet.name}-distance">—</span>
         </div>
       `;
       container.appendChild(card);
@@ -127,6 +166,7 @@
       planets.forEach(planet => {
         const age = earthYears / planet.orbit;
         document.getElementById(`${planet.name}-age`).textContent = age.toFixed(2);
+        document.getElementById(`${planet.name}-distance`).textContent = `${planet.distance} AU`;
       });
     }
   </script>
