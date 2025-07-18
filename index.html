@@ -69,9 +69,6 @@
     .planet-info {
       font-size: 16px;
     }
-    .planet-details {
-      display: none; /* Hide info initially */
-    }
   </style>
 </head>
 <body>
@@ -105,18 +102,16 @@
       const card = document.createElement("div");
       card.className = "card";
 
-      const imageName = planet.name.toLowerCase() + ".jpg";
+      const imageName = planet.name.toLowerCase() + ".jpg"; // You can customize this path
 
       card.innerHTML = `
         <img class="planet-image" src="${imageName}" alt="${planet.name}">
         <div class="planet-info">
           <h2>${planet.name}</h2>
-          <div class="planet-details" id="${planet.name}-info">
-            Age: <span class="age" id="${planet.name}-age">-</span><br>
-            Revolution: ${planet.orbit} Earth years<br>
-            Orbit Time: ~${Math.round(planet.orbit * 365)} days<br>
-            Distance: ${planet.distance} AU
-          </div>
+          Age: <span class="age" id="${planet.name}-age"></span><br>
+          Revolution: <span class="revolution" id="${planet.name}-revolution"></span><br>
+          Orbit Time: <span class="orbit" id="${planet.name}-orbit"></span><br>
+          Distance: <span class="distance" id="${planet.name}-distance"></span>
         </div>
       `;
       container.appendChild(card);
@@ -129,11 +124,15 @@
         return;
       }
 
-      // Show info and calculate age
       planets.forEach(planet => {
-        const age = earthYears / planet.orbit;
-        document.getElementById(`${planet.name}-age`).textContent = age.toFixed(2);
-        document.getElementById(`${planet.name}-info`).style.display = "block";
+        const age = (earthYears / planet.orbit).toFixed(2);
+        const orbitDays = Math.round(planet.orbit * 365);
+        const distanceAU = planet.distance;
+
+        document.getElementById(`${planet.name}-age`).textContent = `${age} years`;
+        document.getElementById(`${planet.name}-revolution`).textContent = `${Math.floor(age)} revolutions`;
+        document.getElementById(`${planet.name}-orbit`).textContent = `~${orbitDays} days`;
+        document.getElementById(`${planet.name}-distance`).textContent = `${distanceAU} AU`;
       });
     }
   </script>
