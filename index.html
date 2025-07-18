@@ -51,7 +51,7 @@
       background-color: #ccc;
       padding: 15px;
       border-radius: 20px;
-      display: flex;
+      display: none; /* Hidden initially */
       align-items: center;
       gap: 15px;
     }
@@ -98,11 +98,12 @@
 
     const container = document.getElementById("planetContainer");
 
+    // Create all cards initially (but hidden)
     planets.forEach(planet => {
       const card = document.createElement("div");
       card.className = "card";
 
-      const imageName = planet.name.toLowerCase() + ".jpg";
+      const imageName = planet.name.toLowerCase() + ".jpg"; // Make sure images exist
 
       card.innerHTML = `
         <img class="planet-image" src="${imageName}" alt="${planet.name}">
@@ -117,6 +118,7 @@
       container.appendChild(card);
     });
 
+    // Convert and show
     function convertAges() {
       const earthYears = parseFloat(document.getElementById("earthYearsInput").value);
       if (isNaN(earthYears) || earthYears < 0) {
@@ -124,6 +126,13 @@
         return;
       }
 
+      // Reveal cards
+      const allCards = document.querySelectorAll(".card");
+      allCards.forEach(card => {
+        card.style.display = "flex";
+      });
+
+      // Calculate ages
       planets.forEach(planet => {
         const age = earthYears / planet.orbit;
         document.getElementById(`${planet.name}-age`).textContent = age.toFixed(2);
