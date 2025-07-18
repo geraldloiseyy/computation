@@ -51,7 +51,7 @@
       background-color: #ccc;
       padding: 15px;
       border-radius: 20px;
-      display: none; /* Hidden initially */
+      display: flex;
       align-items: center;
       gap: 15px;
     }
@@ -68,6 +68,9 @@
     }
     .planet-info {
       font-size: 16px;
+    }
+    .planet-details {
+      display: none; /* Hide info initially */
     }
   </style>
 </head>
@@ -98,27 +101,27 @@
 
     const container = document.getElementById("planetContainer");
 
-    // Create all cards initially (but hidden)
     planets.forEach(planet => {
       const card = document.createElement("div");
       card.className = "card";
 
-      const imageName = planet.name.toLowerCase() + ".jpg"; // Make sure images exist
+      const imageName = planet.name.toLowerCase() + ".jpg";
 
       card.innerHTML = `
         <img class="planet-image" src="${imageName}" alt="${planet.name}">
         <div class="planet-info">
           <h2>${planet.name}</h2>
-          Age: <span class="age" id="${planet.name}-age">-</span><br>
-          Revolution: ${planet.orbit} Earth years<br>
-          Orbit Time: ~${Math.round(planet.orbit * 365)} days<br>
-          Distance: ${planet.distance} AU
+          <div class="planet-details" id="${planet.name}-info">
+            Age: <span class="age" id="${planet.name}-age">-</span><br>
+            Revolution: ${planet.orbit} Earth years<br>
+            Orbit Time: ~${Math.round(planet.orbit * 365)} days<br>
+            Distance: ${planet.distance} AU
+          </div>
         </div>
       `;
       container.appendChild(card);
     });
 
-    // Convert and show
     function convertAges() {
       const earthYears = parseFloat(document.getElementById("earthYearsInput").value);
       if (isNaN(earthYears) || earthYears < 0) {
@@ -126,16 +129,11 @@
         return;
       }
 
-      // Reveal cards
-      const allCards = document.querySelectorAll(".card");
-      allCards.forEach(card => {
-        card.style.display = "flex";
-      });
-
-      // Calculate ages
+      // Show info and calculate age
       planets.forEach(planet => {
         const age = earthYears / planet.orbit;
         document.getElementById(`${planet.name}-age`).textContent = age.toFixed(2);
+        document.getElementById(`${planet.name}-info`).style.display = "block";
       });
     }
   </script>
